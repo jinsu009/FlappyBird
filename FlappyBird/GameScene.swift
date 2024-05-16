@@ -12,8 +12,14 @@ class GameScene: SKScene {
    
     // 초기화 함수
     override func didMove(to view: SKView) {
+        
+        // alpha = 투명도
+        let backColor = SKColor(red: 81/255, green: 192/255, blue: 201/255, alpha: 1.0)
+        self.backgroundColor = backColor
+        
         createBird()
         createEnvironment()
+        createPipe()
     }
     
     // 2강 애니메이션 파트_0
@@ -38,7 +44,7 @@ class GameScene: SKScene {
         // 새 이미지 불러와서 화면에 위치시키기
         let bird = SKSpriteNode(imageNamed: "bird1")
         bird.position = CGPoint(x: self.size.width/2, y: 350)
-        bird.zPosition = 4  // 화면에 겹치는 정도..? 투명도..?
+        bird.zPosition = Layer.bird  // 화면에 겹치는 정도..? 투명도..?
         self.addChild(bird)
         
         // 2강 애니메이션 파트_2
@@ -67,34 +73,97 @@ class GameScene: SKScene {
     }
     
     func createEnvironment(){
-        let land = SKSpriteNode(imageNamed: "land")
-        land.position = CGPoint(x: self.size.width/2, y: 50)
-        land.zPosition = 3
-        self.addChild(land)
         
-        let sky = SKSpriteNode(imageNamed: "sky")
-        sky.position = CGPoint(x: self.size.width/2, y: 100)
-        sky.zPosition = 1
-        self.addChild(sky)
+        // 3강 무한한 무대 만들기
+        /*
+         land 반복 출력하게 하기
+         environment 에 있는 파일을 atlas에 넣어서 사용한다.
+         */
         
-        let ceiling = SKSpriteNode(imageNamed: "ceiling")
-        ceiling.position = CGPoint(x: self.size.width/2, y: self.size.height)
-        ceiling.zPosition = 3
-        self.addChild(ceiling)
+        let envAtlas = SKTextureAtlas(named: "Environment")
+        let landTexture = envAtlas.textureNamed("land") // atlas에 land라는 sprite 불러오기
+        let landRepeatNum = Int(ceil( self.size.width/landTexture.size().width ))
         
+        for i in 0...landRepeatNum{
+            let land = SKSpriteNode(texture: landTexture)
+            land.anchorPoint = CGPoint.zero // land를 붙이는 기준 , 0.5:중심 , zero:좌측하단기준 , 1:우상단
+            land.position = CGPoint(x: CGFloat(i) * land.size.width, y:0)
+            land.zPosition= Layer.land
+            
+            addChild(land)
+            
+            let landMoveLeft = SKAction.moveBy(x: -landTexture.size().width, y: 0, duration: 20)
+            let landMoveReset = SKAction.moveBy(x: landTexture.size().width, y: 0, duration: 0)
+            let landMoveSequence = SKAction.sequence([landMoveLeft, landMoveReset])
+            land.run(SKAction.repeatForever(landMoveSequence))
+        }
+        
+        let skyTexture = envAtlas.textureNamed("sky")
+        let skyRepeatNum = Int(ceil(self.size.width/skyTexture.size().width))
+        
+        for i in 0...skyRepeatNum{
+            let sky = SKSpriteNode(texture: skyTexture)
+            sky.anchorPoint = CGPoint.zero
+            sky.position = CGPoint(x: CGFloat(i) * sky.size.width, y: envAtlas.textureNamed("land").size().height)
+            sky.zPosition = Layer.sky
+            
+            addChild(sky)
+            
+            let skyMoveLeft = SKAction.moveBy(x: -skyTexture.size().width, y: 0, duration: 40)
+            let skyMoveReset = SKAction.moveBy(x: skyTexture.size().width, y: 0, duration: 0)
+            let skyMoveSequence = SKAction.sequence([skyMoveLeft, skyMoveReset])
+            sky.run(SKAction.repeatForever(skyMoveSequence))
+        }
+                               
+        let ceilingTexture = envAtlas.textureNamed("ceiling")
+        let ceilingRepeatNum = Int(ceil(self.size.width / ceilingTexture.size().width))
+        
+        for i in 0...ceilingRepeatNum{
+            let ceil = SKSpriteNode(texture: ceilingTexture)
+            ceil.anchorPoint = CGPoint.zero
+            ceil.position = CGPoint(x: CGFloat(i) * ceil.size.width, y: self.size.height - ceil.size.height / 2)
+            ceil.zPosition = Layer.ceil
+            
+            addChild(ceil)
+            
+            let ceilMoveLeft = SKAction.moveBy(x: -ceilingTexture.size().width, y: 0, duration: 3)
+            let ceilMoveReset = SKAction.moveBy(x: ceilingTexture.size().width, y: 0, duration: 0)
+            let ceilMoveSequence = SKAction.sequence([ceilMoveLeft, ceilMoveReset])
+            ceil.run(SKAction.repeatForever(ceilMoveSequence))
+        }
+        
+        /**
+         각 이미지의 duration을 다르게 주어 플레이어기준으로 먼 배경은 천천히 지나가고 가까운 배경은 빨리 지나가는 효과를 줄 수 있다.
+         */
+        
+//        let land = SKSpriteNode(imageNamed: "land")
+//        land.position = CGPoint(x: self.size.width/2, y: 50)
+//        land.zPosition = 3
+//        self.addChild(land)
+        
+//        let sky = SKSpriteNode(imageNamed: "sky")
+//        sky.position = CGPoint(x: self.size.width/2, y: 100)
+//        sky.zPosition = 1
+//        self.addChild(sky)
+        
+//        let ceiling = SKSpriteNode(imageNamed: "ceiling")
+//        ceiling.position = CGPoint(x: self.size.width/2, y: self.size.height)
+//        ceiling.zPosition = 3
+//        self.addChild(ceiling)
+    }
+    
+    func createPipe(){
         let pipeDown = SKSpriteNode(imageNamed: "pipe")
         pipeDown.position = CGPoint(x: self.size.width/2, y: 0)
-        pipeDown.zPosition = 2
+        pipeDown.zPosition = Layer.pipe
         self.addChild(pipeDown)
         
         let pipeUp = SKSpriteNode(imageNamed: "pipe")
         pipeUp.position = CGPoint(x: self.size.width/2, y: self.size.height + 100)
-        pipeUp.zPosition = 2
+        pipeUp.zPosition = Layer.pipe
         pipeUp.xScale = -1 // x방향으로 180' 회전
         pipeUp.zRotation = .pi // 이미지가 180' 회전 , 위 아래가 뒤집힘
         self.addChild(pipeUp)
-        
-       
     }
    
 }
