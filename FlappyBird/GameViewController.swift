@@ -33,6 +33,9 @@ class GameViewController: UIViewController {
             view.showsFPS = true
             // 화면에 표시되고 있는 노드의 갯수를 보여주는 옵션
             view.showsNodeCount = true
+            
+            // physicsBody 가 보이도록 하는 옵션
+            view.showsPhysics = true
         }
     }
     
