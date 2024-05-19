@@ -12,7 +12,17 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     
     // 새 이미지 불러와서 화면에 위치시키기
     var bird = SKSpriteNode()
+    
+    // 5강 점수
+    // didSet : score가 변할 때마다 실행됨
+    var score:Int = 0 {
+        didSet{
+            scoreLabel.text = "\(score)"
+        }
+    }
+    var scoreLabel = SKLabelNode()
    
+    // MARK: -sprites Alignment
     // 초기화 함수
     override func didMove(to view: SKView) {
         
@@ -28,6 +38,18 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         createBird()
         createEnvironment()
         createInfinitePipe(duration: 4)
+        createScore()
+    }
+    
+    func createScore(){
+        scoreLabel = SKLabelNode(fontNamed: "AppleGothic")
+        scoreLabel.fontSize = 24
+        scoreLabel.fontColor = .white
+        scoreLabel.position = CGPoint(x: self.size.width / 2, y: self.size.height - 60)
+        scoreLabel.zPosition = Layer.hud // 어떤 객체보다 위에 표시되어야 한다.
+        scoreLabel.horizontalAlignmentMode = .center
+        scoreLabel.text = "\(score)"
+        addChild(scoreLabel)
     }
     
     // 2강 애니메이션 파트_0
@@ -219,8 +241,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         // 파이프 사이에 선을 하나 놓고 새와 선이 접촉 했을 때 가산되는 방법으로 진행
         let pipeCollision = SKSpriteNode(color: UIColor.red, size: CGSize(width: 1, height : self.size.height))
         pipeCollision.zPosition = Layer.pipe
+        pipeCollision.physicsBody = SKPhysicsBody(rectangleOf: pipeCollision.size)
         pipeCollision.physicsBody?.categoryBitMask = PhysicsCategory.score
+        pipeCollision.physicsBody?.isDynamic = false
         pipeCollision.name = "pipeCollision"
+        
+
         
         addChild(pipeDown)
         addChild(pipeUp)
@@ -260,6 +286,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         run(SKAction.repeatForever(actSeq))
     }
     
+    // MARK: - Game Algorithm
+    
     // touch callback
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0) // 속도 reset
@@ -290,6 +318,7 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
             print("pipe")
         case PhysicsCategory.score:
             print("score")
+            score += 1
         default:
             break
         }
