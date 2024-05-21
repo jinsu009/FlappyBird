@@ -20,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		6016D7E32BF9C37B0040C213 /* Minercraftory.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Minercraftory.ttf; path = ../../Asset06/Minercraftory.ttf; sourceTree = "<group>"; };
+		602036112BFCCE5B005F4003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		60605C732BEF625400949172 /* FlappyBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlappyBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60605C762BEF625400949172 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60605C7C2BEF625400949172 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -61,6 +62,7 @@
 		60605C752BEF625400949172 /* FlappyBird */ = {
 			isa = PBXGroup;
 			children = (
+				602036112BFCCE5B005F4003 /* Info.plist */,
 				6016D7E32BF9C37B0040C213 /* Minercraftory.ttf */,
 				60605C762BEF625400949172 /* AppDelegate.swift */,
 				60605C7C2BEF625400949172 /* GameScene.swift */,
@@ -304,6 +306,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5U7T9DMLUX;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlappyBird/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -331,6 +334,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5U7T9DMLUX;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlappyBird/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

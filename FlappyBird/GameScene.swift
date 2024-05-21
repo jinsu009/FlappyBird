@@ -8,10 +8,20 @@
 import SpriteKit
 import GameplayKit
 
+// 7강 state machine 도입하기
+enum GameState {
+    case ready
+    case playing
+    case dead
+}
+
 class GameScene: SKScene , SKPhysicsContactDelegate{
     
     // 새 이미지 불러와서 화면에 위치시키기
     var bird = SKSpriteNode()
+    
+    // gamestate 초기화 : 초기상태는 ready
+    var gameState = GameState.ready
     
     // 5강 점수
     // didSet : score가 변할 때마다 실행됨
@@ -37,12 +47,12 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         
         createBird()
         createEnvironment()
-        createInfinitePipe(duration: 4)
+//        createInfinitePipe(duration: 4)
         createScore()
     }
     
     func createScore(){
-        scoreLabel = SKLabelNode(fontNamed: "AppleGothic")
+        scoreLabel = SKLabelNode(fontNamed: "Minercraftory")
         scoreLabel.fontSize = 24
         scoreLabel.fontColor = .white
         scoreLabel.position = CGPoint(x: self.size.width / 2, y: self.size.height - 60)
@@ -84,7 +94,8 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         bird.physicsBody?.collisionBitMask =  PhysicsCategory.land | PhysicsCategory.pipe | PhysicsCategory.ceil
         bird.physicsBody?.affectedByGravity = true
         // 다른 객체들과 상호작용을 해야하기 때문에 true
-        bird.physicsBody?.isDynamic = true
+        // 7강에서 게임 처음 시작시 사용자는 멈춤상태이기 때문에 true > false 로 변경
+        bird.physicsBody?.isDynamic = false
         self.addChild(bird)
         
         // 2강 애니메이션 파트_2
@@ -290,8 +301,33 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
     
     // touch callback
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0) // 속도 reset
-        self.bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 7))
+        
+        /**
+         6강 까지는 화면을 터치할 경우 새가 위로 올라가는 이벤트가 있었지만
+         7강 에서는 gameState 에 대한 대응을 해보도록 한다.
+         */
+        
+        switch gameState {
+        case .ready:
+            // ready 일 때 touchEvent
+            // game start , bird & pipe move
+            // 처음 시작할 때 새가 밑으로 떨어지기 때문에 위로 올려준다.
+            gameState = .playing
+            self.bird.physicsBody?.isDynamic = true
+            self.bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 10 ))
+            self.createInfinitePipe(duration: 4)
+        case .playing:
+            self.bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0) // 속도 reset
+            self.bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 7))
+        case .dead:
+            // game이 종료됐을 때
+            let scene = GameScene(size: self.size)
+            // transition : scene가 어떤 방식으로 나타날 것 인지에 대해 정의
+            let transition = SKTransition.doorsOpenHorizontal(withDuration: 1)
+            self.view?.presentScene(scene, transition: transition )
+        }
+        
+        
     }
     
     
@@ -312,16 +348,24 @@ class GameScene: SKScene , SKPhysicsContactDelegate{
         switch collideType {
         case PhysicsCategory.land:
             print("land")
+            gameOver()
         case PhysicsCategory.ceil:
             print("ceil")
         case PhysicsCategory.pipe:
             print("pipe")
+            gameOver()
         case PhysicsCategory.score:
             print("score")
             score += 1
         default:
             break
         }
+    }
+    
+    func gameOver(){
+        self.gameState = .dead
+        self.isPaused = true // 화면정지
+        
     }
    
 }
