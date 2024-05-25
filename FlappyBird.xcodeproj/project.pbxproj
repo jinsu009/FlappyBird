@@ -15,6 +15,12 @@
 		60605C842BEF625700949172 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60605C832BEF625700949172 /* Assets.xcassets */; };
 		60605C872BEF625700949172 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 60605C862BEF625700949172 /* Base */; };
 		60A477252BF37F6A00588511 /* ActionList.sks in Resources */ = {isa = PBXBuildFile; fileRef = 60A477232BF37E5300588511 /* ActionList.sks */; };
+		60AC3EE42C01BC31008B8823 /* bgm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 60AC3ED02C01BC31008B8823 /* bgm.mp3 */; };
+		60AC3EE52C01BC31008B8823 /* sfxDie.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 60AC3ED12C01BC31008B8823 /* sfxDie.mp3 */; };
+		60AC3EE62C01BC31008B8823 /* sfxHit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 60AC3ED22C01BC31008B8823 /* sfxHit.mp3 */; };
+		60AC3EE72C01BC31008B8823 /* sfxPoint.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 60AC3ED32C01BC31008B8823 /* sfxPoint.mp3 */; };
+		60AC3EE82C01BC31008B8823 /* sfxSwooshing.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 60AC3ED42C01BC31008B8823 /* sfxSwooshing.mp3 */; };
+		60AC3EE92C01BC31008B8823 /* sfxWing.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 60AC3ED52C01BC31008B8823 /* sfxWing.mp3 */; };
 		60BF9EA72BF6280300446D4D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BF9EA62BF6280300446D4D /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +35,12 @@
 		60605C832BEF625700949172 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60605C862BEF625700949172 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		60A477232BF37E5300588511 /* ActionList.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ActionList.sks; sourceTree = "<group>"; };
+		60AC3ED02C01BC31008B8823 /* bgm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgm.mp3; sourceTree = "<group>"; };
+		60AC3ED12C01BC31008B8823 /* sfxDie.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sfxDie.mp3; sourceTree = "<group>"; };
+		60AC3ED22C01BC31008B8823 /* sfxHit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sfxHit.mp3; sourceTree = "<group>"; };
+		60AC3ED32C01BC31008B8823 /* sfxPoint.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sfxPoint.mp3; sourceTree = "<group>"; };
+		60AC3ED42C01BC31008B8823 /* sfxSwooshing.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sfxSwooshing.mp3; sourceTree = "<group>"; };
+		60AC3ED52C01BC31008B8823 /* sfxWing.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sfxWing.mp3; sourceTree = "<group>"; };
 		60BF9EA62BF6280300446D4D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +74,7 @@
 		60605C752BEF625400949172 /* FlappyBird */ = {
 			isa = PBXGroup;
 			children = (
+				60AC3ED62C01BC31008B8823 /* Sounds */,
 				602036112BFCCE5B005F4003 /* Info.plist */,
 				6016D7E32BF9C37B0040C213 /* Minercraftory.ttf */,
 				60605C762BEF625400949172 /* AppDelegate.swift */,
@@ -74,6 +87,19 @@
 				60BF9EA62BF6280300446D4D /* Constants.swift */,
 			);
 			path = FlappyBird;
+			sourceTree = "<group>";
+		};
+		60AC3ED62C01BC31008B8823 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				60AC3ED02C01BC31008B8823 /* bgm.mp3 */,
+				60AC3ED12C01BC31008B8823 /* sfxDie.mp3 */,
+				60AC3ED22C01BC31008B8823 /* sfxHit.mp3 */,
+				60AC3ED32C01BC31008B8823 /* sfxPoint.mp3 */,
+				60AC3ED42C01BC31008B8823 /* sfxSwooshing.mp3 */,
+				60AC3ED52C01BC31008B8823 /* sfxWing.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,11 +160,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60AC3EE52C01BC31008B8823 /* sfxDie.mp3 in Resources */,
 				60605C822BEF625400949172 /* Base in Resources */,
+				60AC3EE82C01BC31008B8823 /* sfxSwooshing.mp3 in Resources */,
+				60AC3EE72C01BC31008B8823 /* sfxPoint.mp3 in Resources */,
 				60605C842BEF625700949172 /* Assets.xcassets in Resources */,
 				6016D7E42BF9C37B0040C213 /* Minercraftory.ttf in Resources */,
+				60AC3EE42C01BC31008B8823 /* bgm.mp3 in Resources */,
 				60605C872BEF625700949172 /* Base in Resources */,
+				60AC3EE62C01BC31008B8823 /* sfxHit.mp3 in Resources */,
 				60A477252BF37F6A00588511 /* ActionList.sks in Resources */,
+				60AC3EE92C01BC31008B8823 /* sfxWing.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
